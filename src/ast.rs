@@ -112,9 +112,11 @@ impl MathExpr {
                 }
             }
             MathExpr::FunctionCall { name, args } => {
-                // 特殊处理绝对值
+                // 特殊处理绝对值和范数
                 if name == "abs" && args.len() == 1 {
                     format!("|{}|", args[0].to_string())
+                } else if name == "norm" && args.len() == 1 {
+                    format!("||{}||", args[0].to_string())
                 } else {
                     let args_str = args.iter()
                         .map(|arg| arg.to_string())
