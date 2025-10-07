@@ -5,3 +5,31 @@ edition = "2024"
 
 [dependencies]
 logos = "0.15.1"
+
+[[example]]
+name = "arithmetic_examples"
+path = "examples/arithmetic_examples.rs"
+
+[[example]]
+name = "power_subscript_examples"
+path = "examples/power_subscript_examples.rs"
+
+[[example]]
+name = "fractions_roots_examples"
+path = "examples/fractions_roots_examples.rs"
+
+[[example]]
+name = "functions_examples"
+path = "examples/functions_examples.rs"
+
+[[example]]
+name = "complex_examples"
+path = "examples/complex_examples.rs"
+
+[[example]]
+name = "matrix_examples"
+path = "examples/matrix_examples.rs"
+
+[[example]]
+name = "markdown_parsing_examples"
+path = "examples/markdown_parsing_examples.rs"
