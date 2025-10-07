@@ -1,11 +1,11 @@
-use markdown_formula_parser::parse_display_math;
+use markdown_formula_parser::{parse_inline_math, parse_display_math};
 
 fn main() {
-    println!("=== 矩阵表达式测试 ===\n");
+    println!("=== 微积分表达式测试 ===\n");
     
-    // 测试基本矩阵
-    let expr1 = "\\begin{matrix} a & b \\\\ c & d \\end{matrix}";
-    match parse_display_math(expr1) {
+    // 测试基本导数表达式
+    let expr1 = "\\frac{d}{dx} f(x)";
+    match parse_inline_math(expr1) {
         Ok(ast) => {
             println!("表达式: {}", expr1);
             println!("AST: {:#?}", ast.expr);
@@ -16,9 +16,9 @@ fn main() {
         }
     }
     
-    // 测试2x3矩阵
-    let expr2 = "\\begin{matrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\end{matrix}";
-    match parse_display_math(expr2) {
+    // 测试基本积分表达式
+    let expr2 = "\\int_{a}^{x} f(t) dt";
+    match parse_inline_math(expr2) {
         Ok(ast) => {
             println!("表达式: {}", expr2);
             println!("AST: {:#?}", ast.expr);
@@ -29,8 +29,8 @@ fn main() {
         }
     }
     
-    // 测试带括号的矩阵
-    let expr3 = "\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}";
+    // 测试微积分基本定理表达式
+    let expr3 = "\\frac{d}{dx}\\left[\\int_{a}^{x} f(t) dt\\right] = f(x)";
     match parse_display_math(expr3) {
         Ok(ast) => {
             println!("表达式: {}", expr3);
@@ -42,8 +42,8 @@ fn main() {
         }
     }
     
-    // 测试方程中的矩阵
-    let expr4 = "A = \\begin{bmatrix} 1 & 2 \\\\ 3 & 4 \\end{bmatrix}";
+    // 测试牛顿莱布尼茨公式
+    let expr4 = "\\int_{a}^{b} f'(x) dx = f(b) - f(a)";
     match parse_display_math(expr4) {
         Ok(ast) => {
             println!("表达式: {}", expr4);
@@ -55,9 +55,9 @@ fn main() {
         }
     }
     
-    // 测试行列式
-    let expr5 = "\\begin{vmatrix} a & b \\\\ c & d \\end{vmatrix}";
-    match parse_display_math(expr5) {
+    // 测试导数运算符
+    let expr5 = "\\frac{d}{dx}[x^2] = 2x";
+    match parse_inline_math(expr5) {
         Ok(ast) => {
             println!("表达式: {}", expr5);
             println!("AST: {:#?}", ast.expr);

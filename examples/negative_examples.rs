@@ -1,11 +1,11 @@
-use markdown_formula_parser::parse_display_math;
+use markdown_formula_parser::{parse_inline_math, parse_display_math};
 
 fn main() {
-    println!("=== 矩阵表达式测试 ===\n");
+    println!("=== 负号处理测试 ===\n");
     
-    // 测试基本矩阵
-    let expr1 = "\\begin{matrix} a & b \\\\ c & d \\end{matrix}";
-    match parse_display_math(expr1) {
+    // 测试简单的负号表达式
+    let expr1 = "-x";
+    match parse_inline_math(expr1) {
         Ok(ast) => {
             println!("表达式: {}", expr1);
             println!("AST: {:#?}", ast.expr);
@@ -16,9 +16,9 @@ fn main() {
         }
     }
     
-    // 测试2x3矩阵
-    let expr2 = "\\begin{matrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\end{matrix}";
-    match parse_display_math(expr2) {
+    // 测试负数
+    let expr2 = "-5";
+    match parse_inline_math(expr2) {
         Ok(ast) => {
             println!("表达式: {}", expr2);
             println!("AST: {:#?}", ast.expr);
@@ -29,9 +29,9 @@ fn main() {
         }
     }
     
-    // 测试带括号的矩阵
-    let expr3 = "\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}";
-    match parse_display_math(expr3) {
+    // 测试负指数
+    let expr3 = "e^{-t}";
+    match parse_inline_math(expr3) {
         Ok(ast) => {
             println!("表达式: {}", expr3);
             println!("AST: {:#?}", ast.expr);
@@ -42,9 +42,9 @@ fn main() {
         }
     }
     
-    // 测试方程中的矩阵
-    let expr4 = "A = \\begin{bmatrix} 1 & 2 \\\\ 3 & 4 \\end{bmatrix}";
-    match parse_display_math(expr4) {
+    // 测试复杂负指数
+    let expr4 = "t^{z-1}";
+    match parse_inline_math(expr4) {
         Ok(ast) => {
             println!("表达式: {}", expr4);
             println!("AST: {:#?}", ast.expr);
@@ -55,8 +55,8 @@ fn main() {
         }
     }
     
-    // 测试行列式
-    let expr5 = "\\begin{vmatrix} a & b \\\\ c & d \\end{vmatrix}";
+    // 测试完整表达式
+    let expr5 = "\\Gamma(z) = \\int_{0}^{\\infty} t^{z-1} e^{-t} dt";
     match parse_display_math(expr5) {
         Ok(ast) => {
             println!("表达式: {}", expr5);

@@ -1,11 +1,11 @@
-use markdown_formula_parser::parse_display_math;
+use markdown_formula_parser::{parse_inline_math, parse_display_math};
 
 fn main() {
-    println!("=== 矩阵表达式测试 ===\n");
+    println!("=== 导数表达式测试 ===\n");
     
-    // 测试基本矩阵
-    let expr1 = "\\begin{matrix} a & b \\\\ c & d \\end{matrix}";
-    match parse_display_math(expr1) {
+    // 测试基本导数表达式
+    let expr1 = "\\frac{d}{dx} x^2";
+    match parse_inline_math(expr1) {
         Ok(ast) => {
             println!("表达式: {}", expr1);
             println!("AST: {:#?}", ast.expr);
@@ -16,9 +16,9 @@ fn main() {
         }
     }
     
-    // 测试2x3矩阵
-    let expr2 = "\\begin{matrix} 1 & 2 & 3 \\\\ 4 & 5 & 6 \\end{matrix}";
-    match parse_display_math(expr2) {
+    // 测试带方括号的导数表达式
+    let expr2 = "\\frac{d}{dx}[x^2]";
+    match parse_inline_math(expr2) {
         Ok(ast) => {
             println!("表达式: {}", expr2);
             println!("AST: {:#?}", ast.expr);
@@ -29,8 +29,8 @@ fn main() {
         }
     }
     
-    // 测试带括号的矩阵
-    let expr3 = "\\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}";
+    // 测试完整的微积分基本定理表达式
+    let expr3 = "\\frac{d}{dx}[\\int_{a}^{x} f(t) dt] = f(x)";
     match parse_display_math(expr3) {
         Ok(ast) => {
             println!("表达式: {}", expr3);
@@ -42,9 +42,9 @@ fn main() {
         }
     }
     
-    // 测试方程中的矩阵
-    let expr4 = "A = \\begin{bmatrix} 1 & 2 \\\\ 3 & 4 \\end{bmatrix}";
-    match parse_display_math(expr4) {
+    // 测试简单导数计算结果
+    let expr4 = "\\frac{d}{dx}[x^2] = 2x";
+    match parse_inline_math(expr4) {
         Ok(ast) => {
             println!("表达式: {}", expr4);
             println!("AST: {:#?}", ast.expr);
@@ -52,19 +52,6 @@ fn main() {
         }
         Err(e) => {
             println!("解析错误 '{}': {}\n", expr4, e);
-        }
-    }
-    
-    // 测试行列式
-    let expr5 = "\\begin{vmatrix} a & b \\\\ c & d \\end{vmatrix}";
-    match parse_display_math(expr5) {
-        Ok(ast) => {
-            println!("表达式: {}", expr5);
-            println!("AST: {:#?}", ast.expr);
-            println!("LaTeX: {}\n", ast.to_string());
-        }
-        Err(e) => {
-            println!("解析错误 '{}': {}\n", expr5, e);
         }
     }
 }

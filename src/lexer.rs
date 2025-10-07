@@ -2,8 +2,8 @@ use logos::Logos;
 
 #[derive(Logos, Debug, Clone, PartialEq)]
 pub enum Token {
-    // 数字
-    #[regex(r"-?\d+\.?\d*", |lex| lex.slice().parse().ok())]
+    // 数字（正数）
+    #[regex(r"\d+\.?\d*", |lex| lex.slice().parse().ok())]
     Number(f64),
     
     // 标识符和函数名
@@ -25,6 +25,10 @@ pub enum Token {
     Exclamation,
     #[token("=")]
     Equals,
+    #[token("\\cdot")]
+    CDot,
+    #[token("'")]
+    Prime, // 导数符号
     
     // 括号
     #[token("(")]
@@ -39,6 +43,34 @@ pub enum Token {
     LCurly,
     #[token("}")]
     RCurly,
+    #[token("|")]
+    Pipe, // 绝对值符号
+    
+    // 矩阵相关符号
+    #[token("&")]
+    Ampersand,
+    #[token(";")]
+    Semicolon,
+    #[token("\\\\")]
+    DoubleBackslash,
+    
+    // 环境命令
+    #[token("\\begin")]
+    Begin,
+    #[token("\\end")]
+    End,
+    
+    // 矩阵类型
+    #[token("matrix")]
+    Matrix,
+    #[token("pmatrix")]
+    PMatrix,
+    #[token("bmatrix")]
+    BMatrix,
+    #[token("vmatrix")]
+    VMatrix,
+    #[token("Vmatrix")]
+    VMatrixDouble,
     
     // 特殊符号
     #[token("_")]
@@ -53,6 +85,7 @@ pub enum Token {
     Whitespace,
 }
 
+#[derive(Clone)]
 pub struct Lexer<'a> {
     inner: logos::Lexer<'a, Token>,
 }
